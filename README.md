@@ -8,5 +8,9 @@
 
 # Components
 * Tailwind CSS
-* TailAdmin (Open Sourced)
+* PrimeVue (with theme)
 * Vue 3
+
+# Architecture
+* Frontend: Vue
+* Backend: Laravel

@@ -1,6 +1,7 @@
 @import url('https://fonts.bunny.net/css?family=instrument-sans:400,500,600');
 
 @import 'tailwindcss';
+@import "tailwindcss-primeui";
 
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
 @source '../../storage/framework/views/*.php';
