@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
 
 Route::get('/', function () {
-    return view('layouts.app');
+    return redirect('/products');
 });
 
 Route::get('{view}', ApplicationController::class)->where('view', '(.*)');
