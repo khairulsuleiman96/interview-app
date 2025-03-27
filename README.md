@@ -8,11 +8,16 @@
 
 # Components
 * Tailwind CSS
-* PrimeVue (with theme)
+* PrimeVue (with aura theme)
 * Vue 3
 * Bootstrap Icons
 * PrimeVue forms
 
 # Architecture
-* Frontend: Vue
-* Backend: Laravel
+* Frontend: Vue 3
+* Backend API: Laravel 12
+
+# To start local server
+* composer install
+* npm install
+* composer run dev
