@@ -10,6 +10,8 @@
 * Tailwind CSS
 * PrimeVue (with theme)
 * Vue 3
+* Bootstrap Icons
+* PrimeVue forms
 
 # Architecture
 * Frontend: Vue

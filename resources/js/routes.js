@@ -1,16 +1,16 @@
-import Dashboard from "./components/Dashboard.vue";
-import ListUsers from "./components/ListUsers.vue";
+import ListProducts from "./components/ListProducts.vue";
+import ListCategories from "./components/ListCategories.vue";
 
 export default [
     {
-        path: '/dashboard',
-        name: 'dashboard',
-        component: Dashboard,
+        path: '/products',
+        name: 'products',
+        component: ListProducts,
     },
     {
-        path: '/users',
-        name: 'users',
-        component: ListUsers,
+        path: '/categories',
+        name: 'categories',
+        component: ListCategories,
     },
     // {
     //     path: '/settings',
