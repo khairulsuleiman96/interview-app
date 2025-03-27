@@ -40,7 +40,7 @@
     <Toast />
 
     <Dialog v-model:visible="visible" modal header="Edit Profile" :style="{ width: '25rem' }" @hide="clearForm">
-        <Form @submit="addProducts" class="flex flex-col gap-4 w-full">
+        <Form class="flex flex-col gap-4 w-full">
             <FormField name="name" class="flex flex-col gap-1">
                 <InputText v-model="form.name" type="text" placeholder="Name" />
                 <Message v-if="formErrors.name" severity="error" size="small" variant="simple">{{ formErrors.name[0] }}</Message>

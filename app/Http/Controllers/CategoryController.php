@@ -21,12 +21,10 @@ class CategoryController extends Controller
                 'name' => 'required|string|max:255',
             ]);
     
-            Category::create($validated);
-    
-            return redirect()->back()->with('success', 'Category added!');
-    
+            $category = Category::create($validated);    
+            return response()->json($category, 201);
         } catch (ValidationException $e) {
-            return redirect()->back()->withErrors($e->errors())->withInput();
+            return response()->json(['errors' => $e->errors()], 422);
         }
     }
 }
