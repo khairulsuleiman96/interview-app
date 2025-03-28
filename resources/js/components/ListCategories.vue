@@ -44,7 +44,7 @@
 
 <script setup>
 import axios from 'axios';
-import { ref, onMounted, reactive } from 'vue';
+import { ref, onMounted, onBeforeUnmount, reactive } from 'vue';
 import { useToast } from 'primevue/usetoast';
 
 const toast = useToast();
@@ -102,7 +102,7 @@ const clearForm = () => {
     Object.assign(form, { name: ''});
 }
 
-onMounted(() => {
+const subscribeToChannels = () => {
     Echo.channel(`list-categories`).listen('.categories.added', (e) => {
         toast.add({
             severity: 'success',
@@ -112,7 +112,15 @@ onMounted(() => {
         });
         categories.value.unshift(e.category);
     });
+}
+
+onMounted(() => {
+    subscribeToChannels();
     getCategories();
+});
+
+onBeforeUnmount(() => {
+    Echo.leaveChannel(`list-categories`);
 });
 
 </script>
