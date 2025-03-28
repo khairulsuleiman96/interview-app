@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use Illuminate\Http\Request;
+use App\Events\ListProductsAdded;
+use App\Events\ListProductsUpdated;
 use Illuminate\Validation\ValidationException;
 
 class ProductController extends Controller
@@ -36,6 +38,8 @@ class ProductController extends Controller
     
             $product = Product::create($validated);
             $product->load('category');
+            ListProductsAdded::dispatch($product);
+
             return response()->json($product, 201);
         } catch (ValidationException $e) {
             return response()->json(['errors' => $e->errors()], 422);

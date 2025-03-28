@@ -70,6 +70,7 @@ import { useToast } from 'primevue/usetoast';
 const toast = useToast();
 
 const visible = ref(false); //to control modal
+const loading = ref(true);
 
 const products = ref([]); //make variable reactive
 const categories = ref([]); //make variable reactive
@@ -83,9 +84,11 @@ const form = reactive({
 const formErrors = ref({}); // to store laravel errors
 
 const getProducts = () => {
+    loading.value = true;
     axios.get('/api/products')
     .then((response) => {
         products.value = response.data;
+        loading.value = false;
     });
 }
 
@@ -99,13 +102,13 @@ const getCategories = () => {
 const addProducts = () => {
     axios.post('/api/products', form)
     .then((response) => {
-        toast.add({
-            severity: 'success',
-            summary: 'Product Added!',
-            detail: 'Product added successfully.',
-            life: 3000, // milliseconds
-        });
-        products.value.unshift(response.data);
+        // toast.add({
+        //     severity: 'success',
+        //     summary: 'Product Added!',
+        //     detail: 'Product added successfully.',
+        //     life: 3000, // milliseconds
+        // });
+        // products.value.unshift(response.data);
         formErrors.value = {};
         visible.value = false;
     }).catch((error) => {
@@ -130,6 +133,24 @@ const clearForm = () => {
 }
 
 onMounted(() => {
+    Echo.channel(`list-products`).listen('.products.added', (e) => {
+        toast.add({
+            severity: 'success',
+            summary: 'New Product Added!',
+            detail: `A new product, "${e.product.name}" was added.`,
+            life: 3000, // milliseconds
+        });
+        products.value.unshift(e.product);
+    });
+    Echo.channel(`list-categories`).listen('.categories.added', (e) => {
+        toast.add({
+            severity: 'success',
+            summary: 'New Category Added!',
+            detail: `A new category, "${e.category.name}" was added.`,
+            life: 3000,
+        });
+        categories.value.unshift(e.category);
+    });
     getProducts();
     getCategories();
 });

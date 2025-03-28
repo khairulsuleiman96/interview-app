@@ -50,6 +50,7 @@ import { useToast } from 'primevue/usetoast';
 const toast = useToast();
 
 const visible = ref(false); //to control modal
+const loading = ref(true);
 
 const categories = ref([]); //make variable reactive
 
@@ -60,22 +61,24 @@ const form = reactive({
 const formErrors = ref({}); // to store laravel errors
 
 const getCategories = () => {
+    loading.value = true;
     axios.get('/api/categories')
     .then((response) => {
         categories.value = response.data;
+        loading.value = false;
     });
 }
 
 const addCategories = () => {
     axios.post('/api/categories', form)
     .then((response) => {
-        toast.add({
-            severity: 'success',
-            summary: 'Category Added!',
-            detail: 'Category added successfully.',
-            life: 3000, // milliseconds
-        });
-        categories.value.unshift(response.data);
+        // toast.add({
+        //     severity: 'success',
+        //     summary: 'Category Added!',
+        //     detail: 'Category added successfully.',
+        //     life: 3000, // milliseconds
+        // });
+        // categories.value.unshift(response.data);
         formErrors.value = {};
         visible.value = false;
     }).catch((error) => {
@@ -87,7 +90,7 @@ const addCategories = () => {
                     severity: 'error',
                     summary: 'Operation failed.',
                     detail: 'Failed to add category.',
-                    life: 3000, // milliseconds
+                    life: 3000,
                 });
             }
         }
@@ -100,6 +103,15 @@ const clearForm = () => {
 }
 
 onMounted(() => {
+    Echo.channel(`list-categories`).listen('.categories.added', (e) => {
+        toast.add({
+            severity: 'success',
+            summary: 'New Category Added!',
+            detail: `A new category, "${e.category.name}" was added.`,
+            life: 3000,
+        });
+        categories.value.unshift(e.category);
+    });
     getCategories();
 });
 

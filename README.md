@@ -16,6 +16,7 @@
 # Architecture
 * Frontend: Vue 3
 * Backend API: Laravel 12
+* Websocket: Laravel Reverb & Laravel Echo
 
 # To start local server
 * composer install
